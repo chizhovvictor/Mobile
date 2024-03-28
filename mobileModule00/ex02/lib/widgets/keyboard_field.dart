@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 final List<String> keyboard = [
   'AC',
   'C',
-  '00',
+  '%',
   '/',
   '7',
   '8',
@@ -19,6 +19,7 @@ final List<String> keyboard = [
   '2',
   '3',
   '+',
+  '00',
   '0',
   '.',
   '=',

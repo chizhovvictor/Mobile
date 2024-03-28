@@ -13,7 +13,7 @@ class CalcButton extends StatelessWidget {
         key == '/' ||
         key == '+' ||
         key == '-' ||
-        key == '00') {
+        key == '%') {
       return const Color.fromARGB(255, 233, 125, 30);
     } else if (key == '=') {
       return Colors.white;

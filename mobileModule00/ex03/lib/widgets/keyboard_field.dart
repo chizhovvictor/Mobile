@@ -27,7 +27,10 @@ final List<String> keyboard = [
 ];
 
 class KeyboardField extends StatelessWidget {
-  const KeyboardField({super.key});
+  const KeyboardField({super.key, required this.addData});
+ 
+  final void Function(String) addData;
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -45,6 +48,7 @@ class KeyboardField extends StatelessWidget {
               child: CalcButton(
                 text: key,
                 fontSize: fontSize,
+                addData: addData,
               ),
             ),
         ],

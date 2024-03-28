@@ -6,7 +6,9 @@ class CalcButton extends StatelessWidget {
   final String text;
   final double fontSize;
 
-  const CalcButton({super.key, required this.text, required this.fontSize});
+  const CalcButton({super.key, required this.text, required this.fontSize, required this.addData});
+
+  final void Function(String) addData;
 
   Color getColorForButton(String key) {
     if (key == 'AC' ||
@@ -48,12 +50,12 @@ class CalcButton extends StatelessWidget {
     ));
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-
-      },
+      onPressed: () => addData(text),
       style: getButtonStyle(text),
       child: Text(
         text,

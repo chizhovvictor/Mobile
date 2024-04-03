@@ -33,14 +33,15 @@ class KeyboardField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final fontSize = screenWidth * 0.07;
+    double screenHeight = MediaQuery.of(context).size.height;
+    double scaleFactor = screenHeight / 1170;
+    double fontSize = 50 * scaleFactor;
 
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: GridView.count(
         crossAxisCount: 4,
-        childAspectRatio: 1.3,
+        childAspectRatio: 1.5,
         shrinkWrap: true,
         children: [
           for (var key in keyboard)

@@ -19,23 +19,52 @@ class _InputFieldState extends State<InputField> {
       onPress = newData;
       data += newData;
     });
+
+    //remove data from input field if AC or C is pressed
     if (onPress == 'AC' || (onPress == 'C' && data.length == 1)) {
       widget.updateResult('');
       data = '';
+    //remove last character from input field if C is pressed
     } else if (onPress == 'C' && data.length > 1) {
       data = data.substring(0, data.length - 2);
+    // send data to result field if = is pressed
     } else if (onPress == '=') {
       widget.updateResult(data.substring(0, data.length - 1));
       data = '';
-    } else if (onPress == '0' && data.length == 1) {
-      data = '';
-    } else if (onPress == '00' && data.length == 2) {
-      data = ''; 
+    //check data if pressed operator
+    } else if ((onPress == '0') ||
+        (onPress == '00') ||
+        (onPress == '%') ||
+        (onPress == '.') ||
+        (onPress == '+') ||
+        (onPress == '-') ||
+        (onPress == '*') ||
+        (onPress == '/')) {
+      if (data.length == 1) {
+        data = '';
+      } else if (data[data.length - 2] == onPress) {
+        data = data.substring(0, data.length - 1);
+      } else if (onPress == '00' && data.length == 2) {
+        data = '';
+      }
+
+    //check count of '.' in data  
+    } else if ('.'.allMatches(data).length > 1) {
+      String checkValueToken = data.replaceAll(RegExp(r'([+*/-])'), ' ');
+      List<String> tokens = checkValueToken.split(' ');
+      for (var token in tokens) {
+        '.'.allMatches(token).length == 1
+            ? data = data
+            : data = data.substring(0, data.length - 1);
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double scaleFactor = screenHeight / 1170;
+    double fontSize = 60 * scaleFactor;
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.max,
@@ -45,8 +74,9 @@ class _InputFieldState extends State<InputField> {
           alignment: Alignment.centerRight,
           child: Text(
             data,
-            style: const TextStyle(
-              fontSize: 40,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: fontSize,
               color: Colors.black,
             ),
           ),

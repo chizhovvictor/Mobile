@@ -20,19 +20,22 @@ class _InputFieldState extends State<InputField> {
       data += newData;
     });
     if (onPress == 'AC' || (onPress == 'C' && data.length == 1)) {
+      widget.updateResult('');
       data = '';
     } else if (onPress == 'C' && data.length > 1) {
       data = data.substring(0, data.length - 2);
     } else if (onPress == '=') {
-
       widget.updateResult(data.substring(0, data.length - 1));
       data = '';
+    } else if (onPress == '0' && data.length == 1) {
+      data = '';
+    } else if (onPress == '00' && data.length == 2) {
+      data = ''; 
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    print('data: $data');
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.max,

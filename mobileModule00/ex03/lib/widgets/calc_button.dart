@@ -13,7 +13,7 @@ class CalcButton extends StatelessWidget {
   Color getColorForButton(String key) {
     if (key == 'AC' ||
         key == 'C' ||
-        key == 'x' ||
+        key == '*' ||
         key == '/' ||
         key == '+' ||
         key == '-' ||

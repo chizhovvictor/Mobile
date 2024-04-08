@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:weatherapp_proj/src/screens/currently_page.dart';
 import 'package:weatherapp_proj/src/screens/today_page.dart';
 import 'package:weatherapp_proj/src/screens/weekly_page.dart';
+import 'package:weatherapp_proj/src/widgets/bottom_menu.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,16 +16,38 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   final PageController _pageController = PageController(); // Контроллер страниц
+  final _textController = TextEditingController();
+
+  String inputTextField = '';
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
-    _pageController.animateToPage( // Переход на страницу
+    _pageController.animateToPage(
+      // Переход на страницу
       index,
       duration: const Duration(microseconds: 300),
       curve: Curves.ease,
     );
+  }
+
+  void handleValue(String value) {
+    setState(() {
+      inputTextField = value;
+    });
+  }
+
+  void onGeolocationPressed() {
+    setState(() {
+      inputTextField = 'Geolocation';
+    });
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,8 +55,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple,
-        title: const TextField(
-          decoration: InputDecoration(
+        title: TextField(
+          controller: _textController,
+          onSubmitted: handleValue,
+          style: const TextStyle(color: Colors.white70),
+          decoration: const InputDecoration(
             hintText: 'Search location...',
             hintStyle: TextStyle(color: Colors.white70),
             border: InputBorder.none,
@@ -49,42 +74,29 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white70), // Разделительная черта
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: onGeolocationPressed,
             icon: const Icon(Icons.location_on),
             color: Colors.white70,
           )
         ],
       ),
-      body: PageView(  // Виджет для свайпинга страниц
+      body: PageView(
+        // Виджет для свайпинга страниц
         controller: _pageController,
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
           });
         },
-        children: const <Widget>[
-          CurrentlyPage(),
-          TodayPage(),
-          WeeklyPage(),
+        children: <Widget>[
+          CurrentlyPage(input: inputTextField),
+          TodayPage(input: inputTextField),
+          WeeklyPage(input: inputTextField),
         ],
       ),
-      bottomNavigationBar: BottomNavigationBar(  // Нижняя навигация
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.cloud),
-            label: 'Currently',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.wb_sunny),
-            label: 'Today',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Weekly',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+      bottomNavigationBar: BottomMenu(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
       ),
     );
   }

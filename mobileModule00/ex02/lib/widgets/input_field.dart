@@ -5,12 +5,15 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Align(
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    final double fontSize = screenWidth > 600 ? 30 : 60;
+    return Align(
       alignment: Alignment.centerRight,
       child: Text(
         '0',
         style: TextStyle(
-          fontSize: 60,
+          fontSize: fontSize,
           color: Colors.black,
         ),
       ),

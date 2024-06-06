@@ -18,10 +18,9 @@ class CalcButton extends StatelessWidget {
         key == '+' ||
         key == '-' ||
         key == '00' ||
-        key == '%') {
+        key == '%' ||
+        key == '=') {
       return const Color.fromARGB(255, 233, 125, 30);
-    } else if (key == '=') {
-      return Colors.white;
     } else {
       return Colors.black;
     }
@@ -30,15 +29,15 @@ class CalcButton extends StatelessWidget {
   ButtonStyle getButtonStyle(String key) {
     if (key == '=') {
       return ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(
-          const Color.fromARGB(255, 233, 125, 30),
-        ),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-          const CircleBorder(),
-        ),
-        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-          const EdgeInsets.all(15),
-        ),
+        // backgroundColor: MaterialStateProperty.all<Color>(
+        //   const Color.fromARGB(255, 233, 125, 30),
+        // ),
+        // shape: MaterialStateProperty.all<OutlinedBorder>(
+        //   const CircleBorder(),
+        // ),
+        // padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+        //   const EdgeInsets.all(15),
+        // ),
         minimumSize: MaterialStateProperty.all<Size>(
           const Size(80, 80),
         ),
